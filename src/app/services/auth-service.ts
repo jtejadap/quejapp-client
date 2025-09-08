@@ -7,12 +7,16 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth'; 
+  private apiUrl = '/api/auth'; 
 
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { username, password })
+    let credentials = {
+      "email": username,
+      "password": password
+    }
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
           localStorage.setItem('jwt', response.token);
@@ -58,7 +62,6 @@ export class AuthService {
   isUser(): boolean {
     return this.getUserRoles().includes('ROLE_USER');
   }  
-
 
   logout(): void {
     localStorage.removeItem('jwt');

@@ -4,5 +4,11 @@
   <input id="email" type="email" formControlName="email" />
   <label for="last-name">Last Name: </label>
   <input id="password" type="password" formControlName="password" />  
+  @if (errorMessage) {
+      <div>
+        {{ errorMessage }}
+      </div>
+  }
+
   <button type="submit" [disabled]="!loginResquest.valid">Login</button>
 </form>

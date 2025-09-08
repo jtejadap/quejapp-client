@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { User } from '../models/user';
+import { UserSession } from '../models/user-session';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,16 @@ export class AuthService {
       "email": username,
       "password": password
     }
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials)
+    this.cleanSession();
+    return this.http.post<UserSession>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
-          localStorage.setItem('jwt', response.token);
+          localStorage.setItem('jwt', response.authenticationToken);
+          localStorage.setItem('userdata', JSON.stringify(response.userData));
         })
       );
-  }  
+  }
+
 
   getToken(): string | null {
     return localStorage.getItem('jwt');
@@ -38,14 +42,23 @@ export class AuthService {
   }
 
   getTokenExpiration(): Date | null {    
-    return this.getUserdata()?.expDate || null;
+    const userData = this.getUserdata();
+    return userData ? this.processExpiration(userData.expiration) : null;
   }
+
+  processExpiration(expiration: any): Date | null {
+    const date = new Date(expiration);
+
+    if (!isNaN(date.getTime())) {
+      return date;
+    }
+    return null;
+}
 
   isTokenExpired(): boolean {
     const expiration = this.getTokenExpiration();
-   
+    
     if (!expiration){
-       console.log(expiration);
       return true;
     }  // no token or invalid
     return expiration.getTime() < Date.now();
@@ -56,14 +69,19 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.getUserRoles().includes('ROLE_ADMIN');
+    return this.getUserRoles().includes('ADMINISTRATOR');
   }
 
   isUser(): boolean {
-    return this.getUserRoles().includes('ROLE_USER');
+    return this.getUserRoles().includes('USER');
   }  
 
   logout(): void {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('userdata');
   }  
+
+  cleanSession(): void {
+    this.logout();
+  }
 }

@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 
-export const RoleGuard: CanActivateFn = (route, state) => {
+export const AdminGuard: CanActivateFn = (route, state) => {
   const authenticationService = inject(AuthService);
   const routed = inject(Router);
 
@@ -13,9 +13,7 @@ export const RoleGuard: CanActivateFn = (route, state) => {
   if(authenticationService.isAdmin()){
     return true;
   }
-  if (authenticationService.isUser()) {
-    return true;
-  }
+  
   routed.navigate(['/login']);
   return false;
 };

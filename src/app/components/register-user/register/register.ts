@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../../../models/register-request';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, ActivatedRouteSnapshot, Params} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class Register {
   private authService = inject(AuthService);
   private router = inject(Router);
+  role = signal(0);
+  private activatedRoute = inject(ActivatedRoute);
   errorMessage: string | null = null; // Agrega variable para el mensaje de error
 
   genderOptions = [
@@ -30,6 +32,26 @@ export class Register {
     gender: new FormControl(0,[ Validators.required])    
   });
 
+  constructor() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.setRoleForForm(params);
+    });    
+  }
+
+  setRoleForForm(params:Params){
+    if (this.checkifParamHasValue(params,'role')) {
+      this.role.set(params['role'] === 'admin' ? 1 : 0);
+      return;
+    } 
+    
+    this.role.set(0);
+    return;
+  }
+
+  checkifParamHasValue(params:any, key:string): boolean {
+    return params[key] !== undefined && params[key] !== null && params[key] !== '';
+  }
+
   registerUser() {
     let registerRequest:RegisterRequest = {
       firstname: this.registerForm.value.firstname||'',
@@ -38,12 +60,11 @@ export class Register {
       password: this.registerForm.value.password||'',
       birthdate: this.registerForm.value.birthdate||'',
       gender: Number(this.registerForm.value.gender) || 0,
-      role: 0
+      role: this.role()
     }
 
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
-        console.log('Login successful', response);
         this.router.navigate(['/login']); 
       },
       error: (error) => {        

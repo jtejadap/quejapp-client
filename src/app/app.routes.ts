@@ -5,10 +5,12 @@ import { Login } from './components/loginComponent/login';
 import { Home } from './components/homeComponent/home';
 import { AdminGuard } from './guards/admin-guard';
 import { UserGuard } from './guards/user-guard';
+import { Register } from './components/register-user/register/register';
 
 export const routes: Routes = [
     { path: 'admin', component: AdminDashboard, canActivate: [AdminGuard] },
     { path: 'user', component: UserDashboard, canActivate: [UserGuard] },
+    { path: 'register', component: Register },
     { path: 'login', component: Login },
     { path: '', component: Home }
 ];

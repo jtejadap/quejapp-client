@@ -1,14 +1,13 @@
 <h1>Login</h1>
 <form [formGroup]="loginResquest" (ngSubmit)="onSubmit()">
-  <label for="email">First Name: </label>
+  <label for="email">Correo: </label>
   <input id="email" type="email" formControlName="email" />
-  <label for="last-name">Last Name: </label>
+  <label for="password">Contraseña: </label>
   <input id="password" type="password" formControlName="password" />  
   @if (errorMessage) {
       <div>
         {{ errorMessage }}
       </div>
   }
-
   <button type="submit" [disabled]="!loginResquest.valid">Login</button>
 </form>

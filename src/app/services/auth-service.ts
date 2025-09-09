@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { User } from '../models/user';
 import { UserSession } from '../models/user-session';
+import { RegisterRequest } from '../models/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,11 @@ export class AuthService {
           localStorage.setItem('userdata', JSON.stringify(response.userData));
         })
       );
+  }
+
+  register(userform:RegisterRequest): Observable<any> { 
+    this.cleanSession();  
+    return this.http.post<UserSession>(`${this.apiUrl}/register`, userform);
   }
 
 

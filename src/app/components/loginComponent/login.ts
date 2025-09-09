@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 
@@ -14,8 +14,8 @@ export class Login {
   private router = inject(Router);
 
   loginResquest = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('',[ Validators.required, Validators.email]),
+    password: new FormControl('',[ Validators.required, Validators.minLength(8)])
   });
 
   errorMessage: string | null = null; // Agrega variable para el mensaje de error

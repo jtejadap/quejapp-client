@@ -1,9 +1,9 @@
 <h1>Login</h1>
 <form [formGroup]="loginResquest" (ngSubmit)="onSubmit()">
   <label for="email">Correo: </label>
-  <input id="email" type="email" formControlName="email" />
+  <input id="email" type="email" formControlName="email" required/>
   <label for="password">Contraseña: </label>
-  <input id="password" type="password" formControlName="password" />  
+  <input id="password" type="password" formControlName="password" required/>  
   @if (errorMessage) {
       <div>
         {{ errorMessage }}

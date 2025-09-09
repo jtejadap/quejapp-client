@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth-service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../../../models/register-request';
 import { Router } from '@angular/router';
 
@@ -22,12 +22,12 @@ export class Register {
   ];
 
   registerForm = new FormGroup({
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),  
-    birthdate: new FormControl(''),    
-    gender: new FormControl('')    
+    firstname: new FormControl('',[ Validators.required, Validators.minLength(2)]),
+    lastname: new FormControl('',[ Validators.required, Validators.minLength(2)]),
+    email: new FormControl('',[ Validators.required, Validators.email]),
+    password: new FormControl('',[ Validators.required, Validators.minLength(8)]),  
+    birthdate: new FormControl('',[ Validators.required]),    
+    gender: new FormControl(0,[ Validators.required])    
   });
 
   registerUser() {
@@ -51,4 +51,11 @@ export class Register {
       }
     });
   }
+
+  get firstname() { return this.registerForm.get('firstname'); }
+  get lastname() { return this.registerForm.get('lastname'); }
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
+  get birthdate() { return this.registerForm.get('birthdate'); }
+  get gender() { return this.registerForm.get('gender'); }
 }

@@ -2,22 +2,100 @@
 <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
 
     <label for="firstname">Nombres: </label>
-    <input id="firstname" type="text" formControlName="firstname" />
+    <input id="firstname" type="text" formControlName="firstname" required/>
+    @if (firstname?.invalid && (firstname?.dirty || firstname?.touched)) {
+            <div class="alert">
+              @if (firstname?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (firstname?.hasError('minlength')) {
+                <div>
+                  El nombre debe tener al menos 2 caracteres de longitud.
+                </div>
+              }              
+            </div>
+    }
+
     <label for="lastname">Apellidos: </label>
-    <input id="lastname" type="text" formControlName="lastname" />
+    <input id="lastname" type="text" formControlName="lastname" required/>
+    @if (lastname?.invalid && (lastname?.dirty || lastname?.touched)) {
+            <div class="alert">
+              @if (lastname?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (lastname?.hasError('minlength')) {
+                <div>
+                  El apellido debe tener al menos 2 caracteres de longitud.
+                </div>
+              }              
+            </div>
+    }
+
     <label for="birthdate">Fecha de nacimiento: </label>
-    <input id="birthdate" type="date" formControlName="birthdate" />  
+    <input id="birthdate" type="date" formControlName="birthdate" required/>
+    @if (birthdate?.invalid && (birthdate?.dirty || birthdate?.touched)) {
+            <div class="alert">
+              @if (birthdate?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }            
+            </div>
+    }  
+
     <label for="gender">Sexo: </label>
-    <select id="gender" formControlName="gender">
+    <select id="gender" formControlName="gender" required>
         @for (item of genderOptions; track item.value) {  
             <option [value]="item.value">{{ item.label }}</option>
         }
     </select>
+    @if (gender?.invalid && (gender?.dirty || gender?.touched)) {
+            <div class="alert">
+              @if (gender?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }            
+            </div>
+    }
+    
     
     <label for="email">Correo: </label>
-    <input id="email" type="email" formControlName="email" />
+    <input id="email" type="email" formControlName="email" required/>
+    @if (email?.invalid && (email?.dirty || email?.touched)) {
+            <div class="alert">
+              @if (email?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (email?.hasError('email')) {
+                <div>
+                  Por favor ingrese un correo válido.
+                </div>
+              }              
+            </div>
+    }
     <label for="password">Contraseña: </label>
-    <input id="password" type="password" formControlName="password" /> 
+    <input id="password" type="password" formControlName="password" required/>
+    @if (password?.invalid && (password?.dirty || password?.touched)) {
+            <div class="alert">
+              @if (password?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (password?.hasError('minlength')) {
+                <div>
+                  La contraseña debe tener al menos 8 caracteres de longitud.
+                </div>
+              }              
+            </div>
+    }    
     
     <!--Show error when register action fails-->
     @if (errorMessage) {

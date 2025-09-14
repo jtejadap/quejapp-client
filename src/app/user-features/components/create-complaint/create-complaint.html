@@ -1,0 +1,81 @@
+<h1>Nueva Solicitud</h1>
+
+<form [formGroup]="complaintForm" (ngSubmit)="createComplaint()">
+    <div formGroupName="type">
+        <p>Tipo de solicitud:</p>
+        @for (item of typeOptions; track item.value) {
+            <label>
+                <input type="radio" formControlName="selected" [value]=item.value>
+                {{ item.label }}
+            </label><br>
+        }  
+    </div>
+    @if (type?.invalid && (type?.dirty || type?.touched)) {
+            <div class="alert">
+              @if (type?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }            
+            </div>
+    }
+
+    <label for="category">Categoria: </label>
+    <select id="category" formControlName="category" required>
+        @for (item of categoryOptions; track item.value) {  
+            <option [value]=item.value>{{ item.label }}</option>
+        }
+    </select><br>
+    @if (category?.invalid && (category?.dirty || category?.touched)) {
+            <div class="alert">
+              @if (category?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }            
+            </div>
+    }
+
+    <label for="subject">Asunto: </label>
+    <input id="subject" type="text" formControlName="subject" maxlength="101" required/><br>
+    @if (subject?.invalid && (subject?.dirty || subject?.touched)) {
+            <div class="alert">
+              @if (subject?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (subject?.hasError('maxlength')) {
+                <div>
+                  El asunto debe tener máximo 100 caracteres de longitud.
+                </div>
+              }              
+            </div>
+    }
+
+    <label for="description">Descripción: </label>
+    <textarea id="description" type="text" rows="4" formControlName="description" maxlength="801" required></textarea><br>
+    @if (description?.invalid && (description?.dirty || description?.touched)) {
+            <div class="alert">
+              @if (description?.hasError('required')) {
+                <div>
+                  Este campo es obligatorio.
+                </div>
+              }
+              @if (description?.hasError('maxlength')) {
+                <div>
+                  La descripción debe tener máximo 800 caracteres de longitud.
+                </div>
+              }              
+            </div>
+    }
+
+    <!--Show error when register action fails-->
+    @if (errorMessage) {
+      <div>
+        {{ errorMessage }}
+      </div>
+    }
+  
+    <button type="submit" [disabled]="!complaintForm.valid">Enviar</button>
+</form>

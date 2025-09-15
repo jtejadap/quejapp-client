@@ -1,0 +1,52 @@
+<nav>
+    @if (totalPages >= 1) {
+        <ul class="pagination">
+            <!-- First Page -->
+            <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" aria-label="First page" (click)="firstPage()" [disabled]="currentPage === 1">
+                &laquo;&laquo;
+            </button>
+            </li>
+
+            <!-- Previous Page -->
+            <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" aria-label="Previous page" (click)="prevPage()" [disabled]="currentPage === 1">
+                &laquo;
+            </button>
+            </li>
+
+            <!-- Page Numbers -->
+             @for (item of pageRange; track $index) {
+                <li class="page-item" [class.active]="item === currentPage">
+                    <button class="page-link" (click)="goToPage(item)">{{  item }}</button>
+                </li>
+            }
+            
+
+            <!-- Next Page -->
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" aria-label="Next page" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                &raquo;
+            </button>
+            </li>
+
+            <!-- Last Page -->
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" aria-label="Last page" (click)="lastPage()" [disabled]="currentPage === totalPages">
+                &raquo;&raquo;
+            </button>
+            </li>
+    </ul>
+
+    <!-- Page Size Selector -->
+    <div class="page-size-selector">
+        <label for="pageSizeSelect">Elementos por pagina:</label>
+        <select id="pageSizeSelect" [value]="pageSize" (change)="onPageSizeChange($event)">
+            @for (size of pageSizeOptions; track $index) {
+                <option  [value]="size">{{ size }}</option>
+            }        
+        </select>
+    </div>
+    }
+  
+</nav>

@@ -7,11 +7,15 @@ import { AdminGuard } from './guards/admin-guard';
 import { UserGuard } from './guards/user-guard';
 import { Register } from './components/register-user/register/register';
 import { CreateComplaint } from './user-features/components/create-complaint/create-complaint';
+import { ManageComplaint } from './admin-features/components/manage-complaint/manage-complaint';
+import { ViewComplaint } from './user-features/components/view-complaint/view-complaint';
 
 export const routes: Routes = [
     { path: 'admin', component: AdminDashboard, canActivate: [AdminGuard] },
+    { path: 'admin/complaints/:id', component: ManageComplaint, canActivate: [AdminGuard]},
     { path: 'user', component: UserDashboard, canActivate: [UserGuard] },
     { path: 'user/complaint', component: CreateComplaint, canActivate: [UserGuard] },
+    { path: 'user/complaints/:id', component: ViewComplaint, canActivate: [UserGuard]},
     { path: 'register/:role', component: Register },
     { path: 'login', component: Login },
     { path: '', component: Home },

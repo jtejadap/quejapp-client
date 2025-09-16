@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ComplaintSearchRequest } from '../../../models/complaint-search-request';
 import { ComplaintService } from '../../services/complaint-service';
 import { PageResponse } from '../../../models/page-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -13,6 +14,7 @@ import { PageResponse } from '../../../models/page-response';
 })
 export class UserDashboard implements OnInit {
   private complaintService = inject(ComplaintService);
+  private router = inject(Router);
   page = 1;
   totalItems = 0; 
   pageSize = 5;
@@ -83,6 +85,10 @@ export class UserDashboard implements OnInit {
       }
     });
     
+  }
+
+  viewComplaint(id: string) {
+    this.router.navigate(['/user/complaints', id]);
   }
   
 }

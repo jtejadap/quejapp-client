@@ -16,6 +16,10 @@ export class ComplaintService {
     return this.http.post<CreatedComplaint>(`${this.apiUrl}/complaint`, complaint);
   }
 
+  public getComplaint(id: string) {
+    return this.http.get(`${this.apiUrl}/complaints/${id}`);
+  }
+
   public searchComplaints(request: ComplaintSearchRequest) {
     return this.http.post<PageResponse>(`${this.apiUrl}/complaints`, request);
   }

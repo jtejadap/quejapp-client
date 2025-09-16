@@ -75,10 +75,10 @@
                     <tr>
                         <td class="reference-cell">{{ complaint.reference }}</td>
                         <td class="subject-cell">  {{ complaint.subject }}</td> 
-                        <td> {{ complaint.status  }} </td>
+                        <td>{{ complaint.status  }} </td>
                         <td>{{ complaint.recievedDate }}</td>
                         <td class="actions-cell">
-                            <button class="btn btn-sm btn-primary">
+                            <button (click)="viewComplaint(complaint.id)">
                             View
                             </button>
                         </td>

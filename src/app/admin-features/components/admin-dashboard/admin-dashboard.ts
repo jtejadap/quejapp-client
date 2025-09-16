@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaginationControls } from '../../../components/pagination/pagination-controls/pagination-controls';
 import { ComplaintSearchRequest } from '../../../models/complaint-search-request';
 import { PageResponse } from '../../../models/page-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,6 +14,8 @@ import { PageResponse } from '../../../models/page-response';
 })
 export class AdminDashboard {
   private manageService = inject(ManageService);
+  private router = inject(Router);
+
   page = 1;
   totalItems = 0; 
   pageSize = 5;
@@ -81,7 +84,10 @@ export class AdminDashboard {
         this.loading = false;
         this.complaints = [];
       }
-    });
-    
+    });    
+  }
+
+  viewComplaint(id: string) {
+    this.router.navigate(['/admin/complaints', id]);
   }
 }

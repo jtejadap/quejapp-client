@@ -1,1 +1,105 @@
-<p>admin-dashboard works!</p>
+<div class="complaint-search-container">
+  <div class="search-header">
+    <h2>Search Complaints</h2>
+  </div>
+
+  <!-- Search Form -->
+  <div class="search-form-container">
+    <form [formGroup]="searchForm" class="search-form" (ngSubmit)="searchComplaints()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="searchTerm">Busqueda</label>
+          <input 
+            id="searchTerm"
+            type="text" 
+            formControlName="searchTerm"
+            placeholder="Buscar por asunto o radicado..."
+            class="form-control">
+        </div>        
+
+        <div class="form-group">
+            <label for="status">Estado</label>
+            <select id="status" formControlName="status" class="form-control">
+                @for (item of statusOptions; track item.value) {
+                    <option [value]=item.value>{{ item.label }}</option>
+                }
+            </select>
+        </div> 
+        <button type="submit">Buscar</button>
+      </div>
+    </form>
+  </div><br>
+
+
+
+  <!-- Loading Indicator -->
+   @if (loading) {
+    <div class="loading-indicator">
+      <p>Loading complaints...</p>
+    </div><br>
+   }
+  
+
+  <!-- Error Message -->
+   @if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+    </div><br>
+   }
+  
+
+  <!-- Results Table -->
+   @if (!loading && !error) {
+    <h3>Resultados</h3>
+    @if (complaints.length>0) {
+        <table>
+            <thead>
+                <tr>
+                <th >
+                    Redicado            
+                </th>
+                <th>
+                    Asunto
+                </th>          
+                <th>
+                    Estado           
+                </th>
+                <th>
+                    Fecha de Creación           
+                </th>
+                <th>Herramientas</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (complaint of complaints; track $index) {
+                    <tr>
+                        <td class="reference-cell">{{ complaint.reference }}</td>
+                        <td class="subject-cell">  {{ complaint.subject }}</td> 
+                        <td> {{ complaint.status  }} </td>
+                        <td>{{ complaint.recievedDate }}</td>
+                        <td class="actions-cell">
+                            <button class="btn btn-sm btn-primary">
+                            View
+                            </button>
+                        </td>
+                    </tr>
+                }       
+            </tbody>
+        </table>
+        
+    }
+    <app-pagination-controls
+            [currentPage]="page"
+            [totalItems]="totalItems"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5,10,20,50]"
+            (pageChange)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination-controls>
+     <!-- No Results -->
+    @if(complaints.length === 0) {
+        <p>No complaints found matching your search criteria.</p>
+    }
+   }
+  
+</div>

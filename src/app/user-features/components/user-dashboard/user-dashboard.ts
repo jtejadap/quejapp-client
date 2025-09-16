@@ -39,8 +39,8 @@ export class UserDashboard implements OnInit {
   });
 
   ngOnInit(): void {
-       
-   }
+    this.loadData();       
+  }
 
   onPageChange(newPage: number) {
     this.page = newPage;

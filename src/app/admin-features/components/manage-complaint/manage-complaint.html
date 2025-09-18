@@ -1,1 +1,46 @@
-<p>manage-complaint works!</p>
+<div>
+    <h1>Gestionar Radicado</h1>
+    <!-- Loading Indicator -->
+   @if (loading) {
+    <div class="loading-indicator">
+      <p>Loading complaint...</p>
+    </div><br>
+   }
+  
+
+  <!-- Error Message -->
+   @if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+    </div><br>
+   }
+   <div>    
+    <!-- Complaint Details -->
+    @if (!loading && !error && complaint) {
+        <h2>Detalles del Radicado</h2>
+        <p>ID del Radicado: {{ complaint.reference }}</p>
+        <p>Nombre del Usuario: {{ showUserFullName(complaint.userProfile) }}</p>
+        <p>Correo Electrónico: {{ showUserEmail(complaint.userProfile) }}</p>
+        <p>Estado: {{ showStatusName(complaint.status) }}</p>
+        <p>Tipo: {{ showTypeName(complaint.type) }}</p>
+        <p>Categoria: {{ showCategoryName(complaint.category) }}</p>
+        <p>Asunto: {{ complaint.subject }}</p>
+        <p>Descripción: {{ complaint.description }}</p>
+        <p>Fecha de Creación: {{ complaint.recievedDate | date:'short' }}</p>
+        <p>Última Actualización: {{ complaint.responseDate | date:'short' }}</p>
+        @if (complaint.traceability && complaint.traceability.length > 0) {
+            <h3>Historial de Cambios</h3>
+            <ul>
+                @for (trace of complaint.traceability; track $index) {
+                    <li>
+                        <strong>{{ trace.date | date:'short' }}:</strong> {{ trace.status }} 
+                    </li>
+                }
+            </ul>
+
+        }
+    }
+   </div>
+   
+   
+</div>

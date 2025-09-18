@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ManageService } from '../../services/manage-service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-manage-complaint',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './manage-complaint.html',
   styleUrl: './manage-complaint.css'
 })
@@ -16,6 +17,27 @@ export class ManageComplaint {
 
   loading = false;
   error: string | null = null;
+
+  statusNames = ["Pendiente","En progreso","Resuelta","Cerrada"];  
+  categoryNames = [
+    "Servicio de Buses",
+    "Tarifas y Pagos",
+    "Horarios", 
+    "Rutas",
+    "Infraestructura",
+    "Atención al cliente",
+    "Accesibilidad",
+    "Seguridad",
+    "Otros"
+  ];
+
+  typeNames = [
+    "Petición",
+    "Queja",
+    "Reclamo",
+    "Sugerencia",
+    "Felicitación"
+  ];
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -63,5 +85,39 @@ export class ManageComplaint {
         this.complaint = null;
       }
     });
+  }
+
+  showStatusName(statusCode: number): string {
+    if (statusCode >=0 && statusCode < this.statusNames.length) {
+      return this.statusNames[statusCode];
+    }
+    return "Desconocido";
+  }
+
+  showCategoryName(categoryCode: number): string {
+    if (categoryCode >=0 && categoryCode < this.categoryNames.length) {
+      return this.categoryNames[categoryCode];
+    }
+    return "Desconocida";
+  }
+  showTypeName(typeCode: number): string {
+    if (typeCode >=0 && typeCode < this.typeNames.length) {
+      return this.typeNames[typeCode];
+    }
+    return "Desconocido";
+  }
+
+  showUserFullName(user:any): string {
+    if (user && user.name && user.lastname) {
+      return user.name + ' ' + user.lastname;
+    }
+    return "Anónimo";
+  }
+
+  showUserEmail(user:any): string {
+    if (user && user.email) {
+      return user.email;
+    }
+    return "No proporcionado";
   }
 }

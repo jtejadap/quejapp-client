@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { ComplaintService } from '../../services/complaint-service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-complaint',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './view-complaint.html',
   styleUrl: './view-complaint.css'
 })
@@ -16,6 +17,27 @@ export class ViewComplaint {
 
   loading = false;
   error: string | null = null;
+
+  statusNames = ["Pendiente","En progreso","Resuelta","Cerrada"];  
+  categoryNames = [
+    "Servicio de Buses",
+    "Tarifas y Pagos",
+    "Horarios", 
+    "Rutas",
+    "Infraestructura",
+    "Atención al cliente",
+    "Accesibilidad",
+    "Seguridad",
+    "Otros"
+  ];
+
+  typeNames = [
+    "Petición",
+    "Queja",
+    "Reclamo",
+    "Sugerencia",
+    "Felicitación"
+  ];
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -53,8 +75,7 @@ export class ViewComplaint {
     this.error = null;
     this.complaintService.getComplaint(id).subscribe({
       next: (response) => {
-        this.complaint = response; 
-        console.log(this.complaint);      
+        this.complaint = response;               
         this.loading = false;
       },
       error: (error) => {
@@ -63,6 +84,47 @@ export class ViewComplaint {
         this.complaint = null;
       }
     });
+  }
+
+   showStatusName(statusCode: number): string {
+    if (statusCode >=0 && statusCode < this.statusNames.length) {
+      return this.statusNames[statusCode];
+    }
+    return "Desconocido";
+  }
+
+  showCategoryName(categoryCode: number): string {
+    if (categoryCode >=0 && categoryCode < this.categoryNames.length) {
+      return this.categoryNames[categoryCode];
+    }
+    return "Desconocida";
+  }
+  showTypeName(typeCode: number): string {
+    if (typeCode >=0 && typeCode < this.typeNames.length) {
+      return this.typeNames[typeCode];
+    }
+    return "Desconocido";
+  }
+
+  showUserFullName(user:any): string {
+    if (user && user.name && user.lastname) {
+      return user.name + ' ' + user.lastname;
+    }
+    return "Anónimo";
+  }
+
+  showUserEmail(user:any): string {
+    if (user && user.email) {
+      return user.email;
+    }
+    return "No proporcionado";
+  }
+
+  showPerformedBy(trace:any): string {
+    if (trace && trace.performedBy) {
+      return trace.performedBy;
+    }
+    return "Sistema";
   }
 
 }

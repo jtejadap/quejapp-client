@@ -27,20 +27,64 @@
         <p>Asunto: {{ complaint.subject }}</p>
         <p>Descripción: {{ complaint.description }}</p>
         <p>Fecha de Creación: {{ complaint.recievedDate | date:'short' }}</p>
-        <p>Última Actualización: {{ complaint.responseDate | date:'short' }}</p>
+        <p>Última Actualización: {{ complaint.updatedDate | date:'short' }}</p>
         @if (complaint.traceability && complaint.traceability.length > 0) {
             <h3>Historial de Cambios</h3>
             <ul>
                 @for (trace of complaint.traceability; track $index) {
                     <li>
-                        <strong>{{ trace.date | date:'short' }}:</strong> {{ trace.status }} 
+                        <strong>{{ trace.date | date:'short' }}:</strong> {{ trace.status }} realizado por {{ showPerformedBy(trace) }} 
                     </li>
                 }
             </ul>
 
         }
     }
-   </div>
-   
+    </div>
+    <form [formGroup]="complaintForm" (ngSubmit)="updateComplaint()">    
+        <label for="status">Estado: </label>
+        <select id="status" formControlName="status" required>
+            @for (item of statusNames; track $index) {  
+                <option [value]=$index>{{ item }}</option>
+            }
+        </select><br>
+        @if (status?.invalid && (status?.dirty || status?.touched)) {
+                <div class="alert">
+                @if (status?.hasError('required')) {
+                    <div>
+                    Este campo es obligatorio.
+                    </div>
+                }            
+                </div>
+        }
+
+        <label for="department">Dependencia: </label>
+        <input id="department" type="text" formControlName="department" maxlength="101"><br>
+        @if (department?.invalid && (department?.dirty || department?.touched)) {   
+                <div class="alert">              
+                @if (department?.hasError('maxlength')) {
+                    <div>
+                    La dependencia debe tener máximo 100 caracteres de longitud.
+                    </div>
+                }              
+                </div>
+        }
+        
+
+        <label for="response">Respuesta: </label>
+        <textarea id="response" type="text" rows="4" formControlName="response" maxlength="801"></textarea><br>
+        @if (response?.invalid && (response?.dirty || response?.touched)) {
+                <div class="alert">              
+                @if (response?.hasError('maxlength')) {
+                    <div>
+                    La descripción debe tener máximo 800 caracteres de longitud.
+                    </div>
+                }              
+                </div>
+        }    
+    
+        <button type="submit" [disabled]="!complaintForm.valid">Actualizar</button>
+    </form>
+    
    
 </div>

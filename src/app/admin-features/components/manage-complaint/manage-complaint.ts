@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ManageService } from '../../services/manage-service';
 import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-complaint',
-  imports: [DatePipe],
+  imports: [DatePipe, ReactiveFormsModule],
   templateUrl: './manage-complaint.html',
   styleUrl: './manage-complaint.css'
 })
@@ -38,6 +39,12 @@ export class ManageComplaint {
     "Sugerencia",
     "Felicitación"
   ];
+
+  complaintForm = new FormGroup({    
+    status: new FormControl(0,[ Validators.required]),
+    department: new FormControl('',[ Validators.maxLength(100)]),
+    response: new FormControl('',[ Validators.maxLength(800)])
+  });
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -75,12 +82,50 @@ export class ManageComplaint {
     this.error = null;
     this.manageService.getComplaint(id).subscribe({
       next: (response) => {
-        this.complaint = response; 
-        console.log(this.complaint);      
+        this.complaint = response;
+        this.initializateForm();      
         this.loading = false;
       },
       error: (error) => {
         this.error = 'Error loading complaint: ' + error.message;
+        this.loading = false;
+        this.complaint = null;
+      }
+    });
+  }
+
+  initializateForm() {
+    if (this.complaint) {
+      this.complaintForm.patchValue({
+        status: this.complaint.status||0, 
+        department: this.complaint.department||'', 
+        response: this.complaint.response||''
+      });
+    }
+  }
+
+  updateComplaint() {
+    if (!this.complaintId()) {
+      this.error = 'Invalid complaint ID';
+      return;
+    }
+    let id = this.complaintId()!;
+    let updateRequest:any = {
+      status: Number(this.complaintForm.value.status)||0,
+      department: this.complaintForm.value.department||'',
+      response: this.complaintForm.value.response||''     
+    }
+    this.loading = true;
+    this.error = null;    
+    this.manageService.updateComplaint(id, updateRequest).subscribe({
+      next: (response) => {
+        this.complaint = response; 
+        console.log(this.complaint); 
+        this.initializateForm();     
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Error actualizando radicado: ' + error.message;
         this.loading = false;
         this.complaint = null;
       }
@@ -120,4 +165,15 @@ export class ManageComplaint {
     }
     return "No proporcionado";
   }
+
+  showPerformedBy(trace:any): string {
+    if (trace && trace.performedBy) {
+      return trace.performedBy;
+    }
+    return "Sistema";
+  }
+
+  get status() { return this.complaintForm.get('status'); }
+  get department() { return this.complaintForm.get('department'); } 
+  get response() { return this.complaintForm.get('response'); }
 }

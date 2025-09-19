@@ -5,10 +5,11 @@ import { PaginationControls } from '../../../components/pagination/pagination-co
 import { ComplaintSearchRequest } from '../../../models/complaint-search-request';
 import { PageResponse } from '../../../models/page-response';
 import { Router } from '@angular/router';
+import { NavigationBar } from "../../../components/navigation-bar/navigation-bar";
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [ReactiveFormsModule, PaginationControls],
+  imports: [ReactiveFormsModule, PaginationControls, NavigationBar],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css'
 })

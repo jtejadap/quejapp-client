@@ -5,10 +5,11 @@ import { ComplaintSearchRequest } from '../../../models/complaint-search-request
 import { ComplaintService } from '../../services/complaint-service';
 import { PageResponse } from '../../../models/page-response';
 import { Router } from '@angular/router';
+import { NavigationBar } from '../../../components/navigation-bar/navigation-bar';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [ReactiveFormsModule, PaginationControls],
+  imports: [ReactiveFormsModule, PaginationControls, NavigationBar],
   templateUrl: './user-dashboard.html',
   styleUrl: './user-dashboard.css'
 })

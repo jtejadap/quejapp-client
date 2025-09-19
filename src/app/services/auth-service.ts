@@ -59,7 +59,7 @@ export class AuthService {
       return date;
     }
     return null;
-}
+  }
 
   isTokenExpired(): boolean {
     const expiration = this.getTokenExpiration();
@@ -81,6 +81,11 @@ export class AuthService {
   isUser(): boolean {
     return this.getUserRoles().includes('USER');
   }  
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired();
+  }
 
   logout(): void {
     localStorage.removeItem('jwt');

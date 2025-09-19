@@ -3,10 +3,11 @@ import { ComplaintService } from '../../services/complaint-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ComplaintRequest } from '../../../models/complaint-request';
 import { Router } from '@angular/router';
+import { NavigationBar } from '../../../components/navigation-bar/navigation-bar';
 
 @Component({
   selector: 'app-create-complaint',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NavigationBar],
   templateUrl: './create-complaint.html',
   styleUrl: './create-complaint.css'
 })

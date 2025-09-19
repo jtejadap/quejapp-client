@@ -3,10 +3,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ManageService } from '../../services/manage-service';
 import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NavigationBar } from "../../../components/navigation-bar/navigation-bar";
 
 @Component({
   selector: 'app-manage-complaint',
-  imports: [DatePipe, ReactiveFormsModule],
+  imports: [DatePipe, ReactiveFormsModule, NavigationBar],
   templateUrl: './manage-complaint.html',
   styleUrl: './manage-complaint.css'
 })

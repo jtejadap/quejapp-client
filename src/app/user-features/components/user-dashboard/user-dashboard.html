@@ -66,6 +66,9 @@
                     Estado           
                 </th>
                 <th>
+                    Tiempo de Respuesta           
+                </th>
+                <th>
                     Fecha de Creación           
                 </th>
                 <th>Herramientas</th>
@@ -77,6 +80,7 @@
                         <td class="reference-cell">{{ complaint.reference }}</td>
                         <td class="subject-cell">  {{ complaint.subject }}</td> 
                         <td> {{ complaint.status  }} </td>
+                        <td> {{ complaint.prediction  }} </td>
                         <td>{{ complaint.recievedDate }}</td>
                         <td class="actions-cell">
                             <button (click)="viewComplaint(complaint.id)">

@@ -21,7 +21,8 @@ export class NavigationBar {
   ];
 
   adminNavItems = [
-    { name: 'Radicados', href: '/admin', current: true },    
+    { name: 'Dashboard', href: '/admin', current: true },
+    { name: 'Radicados', href: '/admin/complaints', current: false } 
   ];
 
   guestNavItems = [

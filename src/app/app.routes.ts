@@ -9,9 +9,11 @@ import { Register } from './components/register-user/register/register';
 import { CreateComplaint } from './user-features/components/create-complaint/create-complaint';
 import { ManageComplaint } from './admin-features/components/manage-complaint/manage-complaint';
 import { ViewComplaint } from './user-features/components/view-complaint/view-complaint';
+import { ListComplaints } from './admin-features/components/list-complaints/list-complaints';
 
 export const routes: Routes = [
     { path: 'admin', component: AdminDashboard, canActivate: [AdminGuard] },
+    { path: 'admin/complaints', component:ListComplaints , canActivate: [AdminGuard] },
     { path: 'admin/complaints/:id', component: ManageComplaint, canActivate: [AdminGuard]},
     { path: 'user', component: UserDashboard, canActivate: [UserGuard] },
     { path: 'user/complaint', component: CreateComplaint, canActivate: [UserGuard] },

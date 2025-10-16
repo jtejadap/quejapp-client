@@ -6,10 +6,11 @@ import { ComplaintSearchRequest } from '../../../models/complaint-search-request
 import { PageResponse } from '../../../models/page-response';
 import { Router } from '@angular/router';
 import { NavigationBar } from "../../../components/navigation-bar/navigation-bar";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-complaints',
-  imports: [ReactiveFormsModule, PaginationControls, NavigationBar],
+  imports: [ReactiveFormsModule, PaginationControls, NavigationBar, DatePipe],
   templateUrl: './list-complaints.html',
   styleUrl: './list-complaints.css'
 })
@@ -90,5 +91,34 @@ export class ListComplaints {
 
   viewComplaint(id: string) {
     this.router.navigate(['/admin/complaints', id]);
+  }
+
+  classForStatus(status: any): string {
+    let numberstatus:number = Number.parseInt(status);
+    let classes = 'px-2 py-1 text-xs font-semibold rounded-full ';
+    if (numberstatus>=0 && numberstatus<4){ 
+      switch (numberstatus) {
+        case 0: return classes+'bg-blue-100 text-blue-700 border border-blue-300';
+        case 1: return classes+'bg-yellow-100 text-yellow-700 border border-yellow-300';
+        case 2: return classes+'bg-green-100 text-green-700 border border-green-300';
+        case 3: return classes+'bg-red-100 text-red-700 border border-red-300';
+        default: return classes+'bg-gray-100 text-gray-700 border border-gray-300';
+      }
+    }
+    return classes+'bg-gray-100 text-gray-700';
+  }
+
+  labelForStatus(status: any): string {
+    let numberstatus:number = Number.parseInt(status);
+    if (numberstatus>=0 && numberstatus<4){ 
+      switch (numberstatus) {
+        case 0: return 'Abierto';
+        case 1: return 'En Progreso';
+        case 2: return 'Resuelto';
+        case 3: return 'Cerrado';
+        default: return 'Desconocido';
+      }
+    }
+    return 'Desconocido';
   }
 }

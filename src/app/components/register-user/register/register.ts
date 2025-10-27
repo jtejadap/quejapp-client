@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../../../models/register-request';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot, Params} from '@angular/router';
+import { passwordMatchValidator } from '../../../shared/validators/password-match-validator';
 
 @Component({
   selector: 'app-register',
@@ -28,9 +29,10 @@ export class Register {
     lastname: new FormControl('',[ Validators.required, Validators.minLength(2)]),
     email: new FormControl('',[ Validators.required, Validators.email]),
     password: new FormControl('',[ Validators.required, Validators.minLength(8)]),  
+    confirmPassword: new FormControl('',[ Validators.required, Validators.minLength(8)]),
     birthdate: new FormControl('',[ Validators.required]),    
     gender: new FormControl(0,[ Validators.required])    
-  });
+  },{validators: passwordMatchValidator()});
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -82,6 +84,7 @@ export class Register {
   get lastname() { return this.registerForm.get('lastname'); }
   get email() { return this.registerForm.get('email'); }
   get password() { return this.registerForm.get('password'); }
+  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
   get birthdate() { return this.registerForm.get('birthdate'); }
   get gender() { return this.registerForm.get('gender'); }
 }

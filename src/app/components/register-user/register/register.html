@@ -124,6 +124,33 @@
               contraseña</label>
             <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••••" class="block w-full px-3 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 
                      focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all" />
+            @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
+            <div class="alert">
+              @if (confirmPassword?.hasError('required')) {
+              <div>
+                Este campo es obligatorio.
+              </div>
+              }
+              @if (confirmPassword?.hasError('minlength')) {
+              <div>
+                La contraseña debe tener al menos 8 caracteres de longitud.
+              </div>
+              }
+              @if (confirmPassword?.hasError('passwordMismatch')) {
+              <div>
+                La contraseña debe coincidir.
+              </div>
+              }
+            </div>
+            }
+            @if (registerForm.hasError('passwordMismatch') && (registerForm.dirty || registerForm.touched))
+            {
+            <div class="alert">
+              <div>
+                Las contraseñas deben coincidir.
+              </div>
+            </div>
+            }
           </div>
 
           <!-- Fecha de nacimiento -->
@@ -164,21 +191,17 @@
           </div>
 
         </div>
-         <!--Show error when register action fails-->
-    @if (errorMessage) {
-      <div>
-        {{ errorMessage }}
-      </div>
-    }
+        <!--Show error when register action fails-->
+        @if (errorMessage) {
+        <div>
+          {{ errorMessage }}
+        </div>
+        }
 
 
         <!-- Botón registrar -->
-        <button type="submit"
-          [disabled]="!registerForm.valid"
-          class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-lg 
-                 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 
-                 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 
-                 focus:ring-offset-2 focus:ring-orange-500 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+        <button type="submit" [disabled]="!registerForm.valid"
+          class="flex w-full justify-center rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2 text-white font-semibold shadow hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed">
           Crear cuenta
         </button>
 

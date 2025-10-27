@@ -10,17 +10,17 @@
         <!-- Search Form -->
         <div class="bg-white shadow rounded-lg p-6 mb-6">
             <form [formGroup]="searchForm" (ngSubmit)="searchComplaints()"
-                class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                class="grid grid-cols-1 sm:grid-cols-8 gap-4 items-end">
 
                 <!-- Busqueda -->
-                <div class="flex flex-col">
+                <div class="flex flex-col  sm:col-span-5">
                     <label for="searchTerm" class="text-sm font-medium text-gray-700 mb-1">Búsqueda</label>
                     <input id="searchTerm" type="text" formControlName="searchTerm" placeholder="Asunto o radicado..."
                         class="px-3 py-2 border rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
                 </div>
 
                 <!-- Estado -->
-                <div class="flex flex-col">
+                <div class="flex flex-col sm:col-span-2">
                     <label for="status" class="text-sm font-medium text-gray-700 mb-1">Estado</label>
                     <select id="status" formControlName="status"
                         class="px-3 py-2 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
@@ -32,10 +32,16 @@
                 </div>
 
                 <!-- Botón Buscar -->
-                <div class="flex justify-start sm:justify-end">
+                <div class="flex justify-start sm:justify-end sm:col-span-1">
                     <button type="submit"
-                        class="bg-orange-500 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-600 transition-colors">
-                        Buscar
+                        class=" flex flex-row gap-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-search-icon lucide-search">
+                            <path d="m21 21-4.34-4.34" />
+                            <circle cx="11" cy="11" r="8" />
+                        </svg>
+                        <span>Buscar</span>                       
                     </button>
                 </div>
 
@@ -90,21 +96,21 @@
                             <td class="px-4 py-2">
                                 <div class="flex items-center gap-2">
                                     <!-- Icono de velocidad -->
-                                    @if (complaint.prediction === 'Muy Rápido') {
+                                    @if (complaint.prediction === 'MuyRapido') {
                                     <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-sm font-medium text-green-700">{{ complaint.prediction }}</span>
+                                    <span class="text-sm font-medium text-green-700">Muy Rápido</span>
                                     }
-                                    @else if (complaint.prediction === 'Rápido') {
+                                    @else if (complaint.prediction === 'Rapido') {
                                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-sm font-medium text-blue-700">{{ complaint.prediction }}</span>
+                                    <span class="text-sm font-medium text-blue-700">Rápido</span>
                                     }
                                     @else if (complaint.prediction === 'Lento') {
                                     <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
@@ -112,15 +118,15 @@
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-sm font-medium text-yellow-700">{{ complaint.prediction }}</span>
+                                    <span class="text-sm font-medium text-yellow-700">Lento</span>
                                     }
-                                    @else if (complaint.prediction === 'Muy Lento') {
+                                    @else if (complaint.prediction === 'MuyLento') {
                                     <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-sm font-medium text-red-700">{{ complaint.prediction }}</span>
+                                    <span class="text-sm font-medium text-red-700">Muy Lento</span>
                                     }
                                     @else {
                                     <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">

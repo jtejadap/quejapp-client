@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { ComplaintService } from '../../services/complaint-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ComplaintRequest } from '../../../models/complaint-request';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NavigationBar } from '../../../components/navigation-bar/navigation-bar';
 
 @Component({
   selector: 'app-create-complaint',
-  imports: [ReactiveFormsModule, NavigationBar],
+  imports: [ReactiveFormsModule, NavigationBar, RouterLink],
   templateUrl: './create-complaint.html',
   styleUrl: './create-complaint.css'
 })

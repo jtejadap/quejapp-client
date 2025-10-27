@@ -11,10 +11,10 @@
       <div class="hidden md:flex items-center space-x-6">
         @for (item of navItems; track $index) {
           <a 
-            [href]="item.href"
-            [class]="item.current 
-              ? 'bg-white text-orange-500 px-4 py-2 rounded-lg text-sm font-medium shadow-md' 
-              : 'text-white hover:bg-orange-500 hover:text-black px-4 py-2 rounded-lg text-sm font-medium transition'">
+            [routerLink]="item.route"
+            routerLinkActive="bg-white text-orange-500 shadow-md"
+            [routerLinkActiveOptions]="{exact: true}"
+            class="px-4 py-2 rounded-lg text-sm text-orange-50 font-medium hover:bg-orange-500 hover:text-white transition">
             {{ item.name }}
           </a>
         }
@@ -24,7 +24,11 @@
       <div class="hidden md:flex items-center space-x-4">
         @if (isAuthenticated) {
           <!-- Nombre de usuario en blanco -->
-          <span class="text-white font-medium">Hola {{ getUserName() }}</span>
+           <div class="grid grid-cols-1 gap-0 text-right">
+            <span class="text-white font-medium">Hola! {{ getUserName() }}</span>
+            <span class="text-white text-sm">{{getUserRole()}}</span>
+           </div>
+          
 
           <!-- Botón cerrar sesión blanco con texto naranja -->
           <button 
@@ -59,10 +63,11 @@
     <div class="px-2 pt-2 pb-3 space-y-2 sm:px-3 bg-white shadow-md">
       @for (item of navItems; track $index) {
         <a 
-          [href]="item.href"
-          [class]="item.current 
-            ? 'bg-orange-500 text-white block px-3 py-2 rounded-md text-base font-medium' 
-            : 'text-gray-700 hover:bg-orange-100 hover:text-orange-600 block px-3 py-2 rounded-md text-base font-medium'">
+          [routerLink]="item.route"
+          (click)="navigate(item.route)"
+          routerLinkActive="bg-orange-500 text-white"
+          [routerLinkActiveOptions]="{exact: true}"
+          class="text-gray-700 hover:bg-orange-100 hover:text-orange-600 block px-3 py-2 rounded-md text-base font-medium">
           {{ item.name }}
         </a>
       }

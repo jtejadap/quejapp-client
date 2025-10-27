@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'navigation-bar',
-  imports: [],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './navigation-bar.html',
   styleUrl: './navigation-bar.css'
 })
@@ -15,22 +16,22 @@ export class NavigationBar {
   isAdmin = this.authService.isAdmin();
   isUser = this.authService.isUser();
   navItems: any[] = [];
+  
   userNavItems = [
-    { name: 'Mis Radicados', href: '/user', current: true },
-    { name: 'Nuevo', href: '/user/complaint', current: false },   
+    { name: 'Mis Radicados', route: '/user' },
+    { name: 'Nuevo', route: '/user/complaint' },   
   ];
 
   adminNavItems = [
-    { name: 'Dashboard', href: '/admin', current: true },
-    { name: 'Radicados', href: '/admin/complaints', current: false } 
+    { name: 'Dashboard', route: '/admin' },
+    { name: 'Radicados', route: '/admin/complaints' } 
   ];
 
   guestNavItems = [
-    { name: 'Inicio', href: '/', current: false },
-    { name: 'Ingresar', href: '/login', current: false },
-    { name: 'Registrarse', href: '/register/user', current: false }   
+    { name: 'Inicio', route: '/' },
+    { name: 'Ingresar', route: '/login' },
+    { name: 'Registrarse', route: '/register/user' }   
   ];
-
 
   constructor() {  
     this.checkAuth();
@@ -42,6 +43,7 @@ export class NavigationBar {
     this.isAdmin = this.authService.isAdmin();
     this.isUser = this.authService.isUser();
   }
+
   setNavItems() {
     if (this.isAdmin) {
       this.navItems = this.adminNavItems;
@@ -57,6 +59,16 @@ export class NavigationBar {
     return user ? user.name : 'Guest';
   }
 
+  getUserRole(): string {
+    if (this.isAdmin) {
+      return 'Administrador';
+    }
+    if (this.isUser) {
+      return 'Usuario';
+    }
+    return 'Invitado';
+  }
+
   logout(): void {
     this.authService.logout();    
     this.checkAuth();
@@ -70,9 +82,9 @@ export class NavigationBar {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
-  setActive(item: any): void {
-    this.navItems.forEach(nav => nav.current = false);
-    item.current = true;
+  // Método para cerrar el menú móvil al navegar
+  navigate(route: string): void {
+    this.mobileMenuOpen = false;
+    this.router.navigate([route]);
   }
-
 }

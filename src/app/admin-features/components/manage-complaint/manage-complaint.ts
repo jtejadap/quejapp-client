@@ -43,7 +43,7 @@ export class ManageComplaint {
 
   complaintForm = new FormGroup({    
     status: new FormControl(0,[ Validators.required]),
-    department: new FormControl('',[ Validators.maxLength(100)]),
+    department: new FormControl(''),
     response: new FormControl('',[ Validators.maxLength(800)])
   });
 

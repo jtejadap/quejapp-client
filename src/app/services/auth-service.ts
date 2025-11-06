@@ -4,12 +4,13 @@ import { Observable, tap } from 'rxjs';
 import { User } from '../models/user';
 import { UserSession } from '../models/user-session';
 import { RegisterRequest } from '../models/register-request';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = '/api/auth'; 
+  private apiUrl = environment.apiUrl + '/auth'; 
 
   constructor(private http: HttpClient) {}
 

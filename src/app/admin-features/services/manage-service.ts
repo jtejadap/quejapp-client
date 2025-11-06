@@ -3,12 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { ComplaintSearchRequest } from '../../models/complaint-search-request';
 import { PageResponse } from '../../models/page-response';
 import { CreatedComplaint } from '../../models/created-complaint';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManageService {
-  private apiUrl = '/api/admin';
+  private apiUrl = environment.apiUrl + '/admin';
   private http = inject(HttpClient);
   
   public searchComplaints(request: ComplaintSearchRequest) {

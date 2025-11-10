@@ -33,7 +33,7 @@ export class Home{
 
   collageImages = [
     {
-      src: 'assets/img/Transcaribe.png',
+      src: 'assets/img/transcaribe.png',
       alt: 'Bus Transcaribe',
       title: 'Sistema PQRS'
     },

@@ -18,17 +18,17 @@ export class UserDashboard implements OnInit {
   private complaintService = inject(ComplaintService);
   private router = inject(Router);
   page = 1;
-  totalItems = 0; 
+  totalItems = 0;
   pageSize = 5;
   complaints: any[] = [];
   loading = false;
-  error: string | null = null;  
-    
+  error: string | null = null;
+
   // Sort
   sortBy = 'recievedDate';
   sortDir = 'desc';
 
-  statusOptions= [
+  statusOptions = [
     { value: 0, label: 'All' },
     { value: 1, label: 'Abierto' },
     { value: 2, label: 'En Progreso' },
@@ -36,14 +36,22 @@ export class UserDashboard implements OnInit {
     { value: 4, label: 'Cerrado' }
   ];
 
+  typeNames = [
+    "Petición",
+    "Queja",
+    "Reclamo",
+    "Sugerencia",
+    "Felicitación"
+  ];
+
   // Search form
-  searchForm = new FormGroup({    
+  searchForm = new FormGroup({
     searchTerm: new FormControl(''),
     status: new FormControl(0)
   });
 
   ngOnInit(): void {
-    this.loadData();       
+    this.loadData();
   }
 
   onPageChange(newPage: number) {
@@ -65,15 +73,15 @@ export class UserDashboard implements OnInit {
   loadData() {
     this.loading = true;
     this.error = null;
-    let search:ComplaintSearchRequest = {
+    let search: ComplaintSearchRequest = {
       searchTerm: this.searchForm.value.searchTerm || null,
-      status: Number(this.searchForm.value.status)===0 ? null : (Number(this.searchForm.value.status)-1),
+      status: Number(this.searchForm.value.status) === 0 ? null : (Number(this.searchForm.value.status) - 1),
       page: (this.page - 1),
       size: this.pageSize,
       sortBy: this.sortBy,
-      sortDirection: this.sortDir  
-    }    
-    
+      sortDirection: this.sortDir
+    }
+
     this.complaintService.searchComplaints(search).subscribe({
       next: (response: PageResponse) => {
         this.complaints = response.content;
@@ -86,7 +94,7 @@ export class UserDashboard implements OnInit {
         this.complaints = [];
       }
     });
-    
+
   }
 
   viewComplaint(id: string) {
@@ -94,23 +102,23 @@ export class UserDashboard implements OnInit {
   }
 
   classForStatus(status: any): string {
-    let numberstatus:number = Number.parseInt(status);
+    let numberstatus: number = Number.parseInt(status);
     let classes = 'px-2 py-1 text-xs font-semibold rounded-full ';
-    if (numberstatus>=0 && numberstatus<4){ 
+    if (numberstatus >= 0 && numberstatus < 4) {
       switch (numberstatus) {
-        case 0: return classes+'bg-blue-100 text-blue-700 border border-blue-300';
-        case 1: return classes+'bg-yellow-100 text-yellow-700 border border-yellow-300';
-        case 2: return classes+'bg-green-100 text-green-700 border border-green-300';
-        case 3: return classes+'bg-red-100 text-red-700 border border-red-300';
-        default: return classes+'bg-gray-100 text-gray-700 border border-gray-300';
+        case 0: return classes + 'bg-blue-100 text-blue-700 border border-blue-300';
+        case 1: return classes + 'bg-yellow-100 text-yellow-700 border border-yellow-300';
+        case 2: return classes + 'bg-green-100 text-green-700 border border-green-300';
+        case 3: return classes + 'bg-red-100 text-red-700 border border-red-300';
+        default: return classes + 'bg-gray-100 text-gray-700 border border-gray-300';
       }
     }
-    return classes+'bg-gray-100 text-gray-700';
+    return classes + 'bg-gray-100 text-gray-700';
   }
 
   labelForStatus(status: any): string {
-    let numberstatus:number = Number.parseInt(status);
-    if (numberstatus>=0 && numberstatus<4){ 
+    let numberstatus: number = Number.parseInt(status);
+    if (numberstatus >= 0 && numberstatus < 4) {
       switch (numberstatus) {
         case 0: return 'Abierto';
         case 1: return 'En Progreso';
@@ -121,5 +129,28 @@ export class UserDashboard implements OnInit {
     }
     return 'Desconocido';
   }
-  
+
+  classForType(type:any): string {
+    let typeNumber: number = Number.parseInt(type);
+    let classes = 'font-medium text-sm line-clamp-2 flex items-center gap-2';
+    if (typeNumber >= 0 && typeNumber < 5) {
+      switch (typeNumber) {
+        case 0: return classes + ' text-blue-600';
+        case 1: return classes + ' text-red-600';
+        case 2: return classes + ' text-orange-600';
+        case 3: return classes + ' text-green-600';
+        case 4: return classes + ' text-purple-600';
+        default: return classes + ' text-gray-600';
+      }
+    }
+    return classes + 'text-gray-600';
+  }
+
+  showTypeName(typeCode: number): string {
+    if (typeCode >= 0 && typeCode < this.typeNames.length) {
+      return this.typeNames[typeCode];
+    }
+    return "Desconocido";
+  }
+
 }

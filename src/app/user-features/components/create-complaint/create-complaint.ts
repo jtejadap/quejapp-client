@@ -4,10 +4,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ComplaintRequest } from '../../../models/complaint-request';
 import { Router, RouterLink } from '@angular/router';
 import { NavigationBar } from '../../../components/navigation-bar/navigation-bar';
+import { RadioCard } from '../../../components/radio-card/radio-card';
 
 @Component({
   selector: 'app-create-complaint',
-  imports: [ReactiveFormsModule, NavigationBar, RouterLink],
+  imports: [ReactiveFormsModule, NavigationBar, RouterLink, RadioCard],
   templateUrl: './create-complaint.html',
   styleUrl: './create-complaint.css'
 })
@@ -16,12 +17,10 @@ export class CreateComplaint {
   private router = inject(Router);
   
   complaintForm = new FormGroup({
-    type: new FormGroup({
-      selected: new FormControl(0,[ Validators.required])
-    }),
-    category: new FormControl(0,[ Validators.required]),
-    subject: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
-    description: new FormControl('',[ Validators.required, Validators.maxLength(800)])
+    type: new FormControl(null, [Validators.required]),
+    category: new FormControl(0, [Validators.required]),
+    subject: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.required, Validators.maxLength(800)])
   });
   errorMessage: string | null = null;
 
@@ -38,26 +37,25 @@ export class CreateComplaint {
   ];
 
   typeOptions = [
-    {label:"Petición", value:0},
-    {label:"Queja", value:1},
-    {label:"Reclamo", value:2},
-    {label:"Sugerencia", value:3},
-    {label:"Felicitación", value:4}
+    {label:"Petición", value:0, icon:"📋"},
+    {label:"Queja", value:1, icon:"😞"},
+    {label:"Reclamo", value:2, icon:"⚠️"},
+    {label:"Sugerencia", value:3, icon:"💡"},
+    {label:"Felicitación", value:4, icon:"🎉"}
   ];
 
   createComplaint() {
     let registerRequest:ComplaintRequest = {
-      type: this.complaintForm.value.type?.selected ||0,
-      category: Number(this.complaintForm.value.category)||0,
-      subject: this.complaintForm.value.subject||'',
-      description: this.complaintForm.value.description||''     
+      type: this.complaintForm.value.type ?? 0,
+      category: Number(this.complaintForm.value.category) || 0,
+      subject: this.complaintForm.value.subject || '',
+      description: this.complaintForm.value.description || ''     
     }
     console.log(registerRequest);
     
     this.complaintService.createComplaint(registerRequest).subscribe({
       next: (response) => {
         console.log('Queja creada con éxito');
-        console.log(response); 
         this.router.navigate(['/user']);        
       },
       error: (error) => {

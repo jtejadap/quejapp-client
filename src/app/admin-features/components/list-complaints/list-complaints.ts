@@ -37,6 +37,14 @@ export class ListComplaints {
     { value: 4, label: 'Cerrado' }
   ];
 
+  typeNames = [
+    "Petición",
+    "Queja",
+    "Reclamo",
+    "Sugerencia",
+    "Felicitación"
+  ];
+
   // Search form
   searchForm = new FormGroup({
     searchTerm: new FormControl(''),
@@ -120,5 +128,28 @@ export class ListComplaints {
       }
     }
     return 'Desconocido';
+  }
+
+  classForType(type:any): string {
+    let typeNumber: number = Number.parseInt(type);
+    let classes = 'font-medium text-sm line-clamp-2 flex items-center gap-2';
+    if (typeNumber >= 0 && typeNumber < 5) {
+      switch (typeNumber) {
+        case 0: return classes + ' text-blue-600';
+        case 1: return classes + ' text-red-600';
+        case 2: return classes + ' text-orange-600';
+        case 3: return classes + ' text-green-600';
+        case 4: return classes + ' text-purple-600';
+        default: return classes + ' text-gray-600';
+      }
+    }
+    return classes + 'text-gray-600';
+  }
+
+  showTypeName(typeCode: number): string {
+    if (typeCode >= 0 && typeCode < this.typeNames.length) {
+      return this.typeNames[typeCode];
+    }
+    return "Desconocido";
   }
 }

@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../../../models/register-request';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot, Params} from '@angular/router';
+import { ActivatedRoute, Router, ActivatedRouteSnapshot, Params, RouterLink} from '@angular/router';
 import { passwordMatchValidator } from '../../../shared/validators/password-match-validator';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })

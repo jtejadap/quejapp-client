@@ -40,7 +40,7 @@
                             <path d="m21 21-4.34-4.34" />
                             <circle cx="11" cy="11" r="8" />
                         </svg>
-                        <span>Buscar</span>                       
+                        <span>Buscar</span>
                     </button>
                 </div>
 
@@ -91,6 +91,18 @@
                         <div>
                             <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Asunto</p>
                             <p class="text-gray-900 font-medium text-sm line-clamp-2">{{ complaint.subject }}</p>
+                        </div>
+
+                        <!-- Tipo -->
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Tipo</p>
+                            <p [class]="classForType(complaint.type)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="8" r="8" />
+                                </svg>
+                                {{ showTypeName(complaint.type) }}
+                            </p>
                         </div>
 
                         <!-- Tiempo Estimado -->

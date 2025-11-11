@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { ComplaintService } from '../../services/complaint-service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NavigationBar } from "../../../components/navigation-bar/navigation-bar";
 
 @Component({
   selector: 'app-view-complaint',
-  imports: [DatePipe, NavigationBar],
+  imports: [DatePipe, NavigationBar, RouterLink],
   templateUrl: './view-complaint.html',
   styleUrl: './view-complaint.css'
 })

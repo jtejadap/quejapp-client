@@ -20,7 +20,7 @@
                 </div>
 
                 <button (click)="applyFilters()"
-                    class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all shadow-lg hover:shadow-xl">
+                    class="px-6 py-2.5 bg-gradient-to-r  from-amber-400 to-orange-500 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all shadow-lg hover:shadow-xl">
                     Aplicar
                 </button>
                 <button (click)="clearFilters()"
@@ -59,15 +59,15 @@
             <!-- Navigation Tabs -->
             <div class="bg-white rounded-2xl shadow-lg p-2 mb-8 flex gap-2">
                 <button (click)="changeView('overview')"
-                    [class]="selectedView() === 'overview' ? 'flex-1 py-4 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
+                    [class]="selectedView() === 'overview' ? 'flex-1 py-4 px-6 bg-gradient-to-r  from-amber-400 to-orange-500 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
                     Vista General
                 </button>
                 <button (click)="changeView('employees')"
-                    [class]="selectedView() === 'employees' ? 'flex-1 py-4 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
+                    [class]="selectedView() === 'employees' ? 'flex-1 py-4 px-6 bg-gradient-to-r  from-amber-400 to-orange-500 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
                     Por Empleado
                 </button>
                 <button (click)="changeView('trends')"
-                    [class]="selectedView() === 'trends' ? 'flex-1 py-4 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
+                    [class]="selectedView() === 'trends' ? 'flex-1 py-4 px-6 bg-gradient-to-r  from-amber-400 to-orange-500 text-white font-semibold rounded-xl shadow-lg transition-all' : 'flex-1 py-4 px-6 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all'">
                     Tendencias
                 </button>
             </div>

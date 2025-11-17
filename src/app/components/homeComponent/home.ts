@@ -38,12 +38,12 @@ export class Home{
       title: 'Sistema PQRS'
     },
     {
-      src: 'assets/img/dashboard.png',
+      src: 'assets/img/seguimiento.jpg',
       alt: 'Dashboard de seguimiento',
       title: 'Seguimiento'
     },
     {
-      src: 'assets/img/comunidad.png',
+      src: 'assets/img/comunidad.jpg',
       alt: 'Comunidad de usuarios',
       title: 'Comunidad'
     },
